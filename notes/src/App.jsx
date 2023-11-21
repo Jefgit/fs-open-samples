@@ -9,7 +9,7 @@ const App = () => {
   const [notes, setNotes] = useState(null);
   const [newNote, setNewNote] = useState("a new note");
   const [showAll, setShowAll] = useState(true);
-  const [errorMessage, setErrorMessage] = useState('some error happened...')
+  const [errorMessage, setErrorMessage] = useState(null)
 
   useEffect(() => {
     console.log('effect')
@@ -43,8 +43,6 @@ const App = () => {
       })
   }
 
-  // console.log('render', notes.length, 'notes')
-
   const addNote = (e) => {
     e.preventDefault();
     const noteObject = {
@@ -65,10 +63,6 @@ const App = () => {
 
   console.log(notes);
 
-  // const notesList = notes
-  //                   ? notes.map((note, i) => <li key={i}>{note.content}</li>)
-  //                   :''
-
   const handleNoteChange = (e) => {
     setNewNote(e.target.value);
   };
@@ -81,7 +75,7 @@ const App = () => {
       <Notification message={errorMessage}/>
       <div>
         <button onClick={() => setShowAll(!showAll)}>
-          show {showAll ? "all" : "important"}
+          show {showAll ? "important" : "all"}
         </button>
       </div>
       <ul>
