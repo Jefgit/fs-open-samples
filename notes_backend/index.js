@@ -16,6 +16,19 @@ const unknownEndpoint = (request, response) => {
   response.status(404).send({error:'unknown endpoint'})
 }
 
+const errorHandler = (error, request, response, next) => {
+  console.log(error.message)
+
+  if( error.name === 'CastError'){
+    return response.status(400).send({error: 'malformatted id'})
+  } else if (error.name === 'ValidationError') {
+    return response.status(400).json({error: error.message})
+  }
+  
+  next(error)
+}
+
+
 app.use(express.static('dist'))
 // app.use(cors)
 app.use(express.json())
@@ -65,7 +78,7 @@ let notes = [
     return maxId + 1
   }
 
-  app.post('/api/notes', (request, response) => {
+  app.post('/api/notes', (request, response, next) => {
     const body = request.body
     
     if(!body.content === undefined){
@@ -79,16 +92,35 @@ let notes = [
       important: body.important || false,
     })
     
-    note.save().then(saveNote => {
+    note.save()
+      .then(saveNote => {
       response.json(saveNote)
-    })
+      })
+      .catch(error => next(error))
   })
 
-  app.delete('/api/notes/:id', (request, response) => {
-    const id = Number(request.params.id)
-    notes = notes.filter(note => note.id !== id)
+  app.delete('/api/notes/:id', (request, response, next) => {
+    Note.findByIdAndDelete(request.params.id)
+      .then(result => {
+        response.status(204).end()
+      })
+      .catch(error => next(error))
+  })
 
-    response.status(204).end()
+
+  app.put('/api/notes/:id', (request, response, next) => {
+
+    const {content, important} = request.body
+
+    Note.findByIdAndUpdate(
+      request.params.id, 
+      {content, important}, 
+      {new: true, rundValidators: true, context: 'query'}
+    )
+      .then( updatedNote => {
+        response.json(updatedNote)
+      })
+      .catch(error => next(error))
   })
 
   app.get('/api/notes', (request, response) => {
@@ -98,6 +130,7 @@ let notes = [
   })
     
   app.use(unknownEndpoint)
+  app.use(errorHandler)
 
 const PORT = process.env.PORT
 app.listen(PORT, () => {
