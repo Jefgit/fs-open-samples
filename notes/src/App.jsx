@@ -7,6 +7,7 @@ import { Notification } from "./components/Notification";
 import { Footer } from "./components/Footer";
 import { NoteForm } from "./components/NoteForm";
 import { LoginForm } from "./components/LoginForm";
+import { Togglable } from "./components/Togglable";
 
 const App = () => {
   const [notes, setNotes] = useState(null);
@@ -114,22 +115,26 @@ const App = () => {
     <div>
       <h1>Notes</h1>
       <Notification message={errorMessage}/>
-      {user === null ? 
-      <LoginForm 
-        handleLogin={handleLogin} 
-        username={username} 
-        password={password} 
-        setPassword={setPassword} 
-        setUsername={setUsername}
-        /> : 
-      <div>
-        <p>{user.name} logged-in</p><button type="button" onClick={handleLogout}>logout</button>
-        <NoteForm 
-          addNote={addNote} 
-          newNote={newNote} 
-          handleNoteChange={handleNoteChange} 
-        />
-      </div>
+      {user === null 
+        ?  <Togglable buttonLabel = {'log in'}>
+            <LoginForm 
+              handleLogin={handleLogin} 
+              username={username} 
+              password={password} 
+              setPassword={setPassword} 
+              setUsername={setUsername}
+            />
+            </Togglable>
+        : <div>
+            <p>{user.name} logged-in</p><button type="button" onClick={handleLogout}>logout</button>
+            <Togglable buttonLabel={'new note'} >
+              <NoteForm 
+                addNote={addNote} 
+                newNote={newNote} 
+                handleNoteChange={handleNoteChange} 
+              />
+            </Togglable>
+        </div>
       }
       <div>
         <button onClick={() => setShowAll(!showAll)}>
