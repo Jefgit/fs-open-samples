@@ -11,9 +11,7 @@ const NewNote = () => {
         event.preventDefault()
         const content = event.target.note.value
         event.target.note.value = ''
-        const newNote = await noteService.createNew(content)
-        console.log(newNote)
-        dispatch(createNote(newNote)) 
+        dispatch(createNote(content)) 
       }
 
   return (

@@ -7,7 +7,7 @@
     },
     {
       "content": "state changes are made with actions",
-      "important": true,
+      "important": false,
       "id": "2"
     },
     {
@@ -53,6 +53,11 @@
     {
       "id": "7337",
       "content": "dasda",
+      "important": false
+    },
+    {
+      "id": "2a90",
+      "content": "we",
       "important": false
     }
   ]
