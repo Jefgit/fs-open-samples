@@ -2,12 +2,12 @@
   "notes": [
     {
       "content": "the app state is in redux store",
-      "important": true,
+      "important": false,
       "id": "1"
     },
     {
       "content": "state changes are made with actions",
-      "important": false,
+      "important": true,
       "id": "2"
     },
     {
@@ -23,7 +23,7 @@
     {
       "id": "5800",
       "content": "try",
-      "important": false
+      "important": true
     },
     {
       "id": "b666",
@@ -59,6 +59,26 @@
       "id": "2a90",
       "content": "we",
       "important": false
+    },
+    {
+      "id": "cd31",
+      "content": "weee",
+      "important": true
+    },
+    {
+      "id": "bbf3",
+      "content": "neee",
+      "important": true
+    },
+    {
+      "id": "06f0",
+      "content": "redux toolkit simplifies thingsss",
+      "important": false
+    },
+    {
+      "id": "d02d",
+      "content": "sss",
+      "important": true
     }
   ]
 }
